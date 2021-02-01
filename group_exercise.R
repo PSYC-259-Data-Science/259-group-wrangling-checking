@@ -64,14 +64,57 @@ ds %>% write_csv(here("data_cleaned","cleaned.csv"))
 
 #STEP 3: DATA EXPLORATION
 
-ds %>% ggplot() + geom_histogram(mapping = aes(x = age_years, fill = age_group), binwidth = .5)
+#3A AGE: Are there any errors in age?
+  #How can you visualize age in years and how it relates to age_group categories?
+  #Are all of the ages in each group correct (i.e., within the bounds)?
 
-ds %>% ggplot() + geom_histogram(mapping = aes(x = precision)) 
+ds %>% group_by(id, age_group) %>% summarize(age_years = mean(age_years)) %>% 
+  ggplot(mapping = aes(x = age_years, fill = age_group)) + geom_histogram(binwidth = .5)
 
-
-ds %>% ggplot() + geom_point(mapping = aes(x = age_years, y = precision))
+ds %>% group_by(id, age_group) %>% summarize(age_years = mean(age_years)) %>% 
+  ggplot(mapping = aes(y = age_group, x = age_years)) + geom_boxplot()
 
 ds %>% group_by(age_group) %>% summarise(min_age = min(age_years), max_age = max(age_years))
 
+
+#3B PRECISION: Is the precision acceptable (< 2.5) for each participant?
+  #Are data equally precise for participants of different age?
+
+ds %>% ggplot() + geom_histogram(mapping = aes(x = precision)) 
+ds %>% ggplot() + geom_point(mapping = aes(x = age_years, y = precision))
+
+ds %>% group_by(age_group) %>% summarize(across(precision, list(M = mean, MIN = min, MAX = max)))
+
+#3C SEEN VIDEOS BEFORE:
+  #How many participants in each age group have seen the videos before?
+  #How many total participants saw each video before? 
+
 ds %>% group_by(age_group, stim) %>% summarize(n_watched = sum(watched == "Yes")) %>% 
-  pivot_wider(id_cols = "age_group", names_from = "stim", values_from = "n_watched")
+  pivot_wider(id_cols = "age_group", names_from = "stim", values_from = "n_watched") %>% 
+  print %>% ungroup %>% summarize(across(Feist:Dogs, sum))
+
+#3D AUC VALUES:
+  #Are the two AUC values all within the possible range (0,1)? 
+  #Do the two AUCs appear to change with age?
+  #Does AUC seem to differ according to video and age?
+
+#Easier if we pivot AUC to longer
+ds_longer <- ds %>% pivot_longer(starts_with("AUC"), names_to = "model", values_to = "AUC")
+
+ds_longer %>% ggplot(aes(x = AUC, color = model)) + geom_freqpoly() + xlim(0,1)
+ds_longer %>% group_by(model) %>% summarize(min = min(AUC), max = max(AUC))
+
+ds_longer %>% ggplot(aes(x = age, y = AUC, color = model)) + geom_point()+ xlim(0,1)
+
+ds_longer %>% ggplot(aes(x = age, y = AUC, color = model)) + 
+  geom_point() + 
+  facet_wrap(~stim)
+  xlim(0,1)
+  
+
+
+
+
+  
+  
+
