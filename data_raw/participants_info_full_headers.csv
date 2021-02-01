@@ -1,4 +1,4 @@
-﻿participant ID,Age group,Precision,"Prior to today, have you seen this video before? Feist (1=yes, 2=no, 3=not sure)","Prior to today, have you seen this video before? Plane (1=yes, 2=no, 3=not sure)","Prior to today, have you seen this video before? Fallon  (1=yes, 2=no, 3=not sure)","Prior to today, have you seen this video before? Rube  (1=yes, 2=no, 3=not sure)","Prior to today, have you seen this video before? Pentatonix  (1=yes, 2=no, 3=not sure)","Prior to today, have you seen this video before? Dogs  (1=yes, 2=no, 3=not sure)","Prior to today, have you seen this video before? Science  (1=yes, 2=no, 3=not sure)"
+﻿participant ID,Age group,Precision,Seen Feist,Seen Plane,Seen Fallon,Seen Rube,Seen Pentatonix,Seen Dogs,Seen Science
 6,adult,1.535714286,2,2,2,2,2,1,2
 7,adult,1.585714286,2,1,1,1,2,1,2
 9,adult,1.25,2,2,2,2,2,2,2
