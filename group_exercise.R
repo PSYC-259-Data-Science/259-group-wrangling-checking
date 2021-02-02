@@ -62,7 +62,7 @@ ds <- ds %>% drop_na(AUC_sal:AUC_dist)
 
 ds %>% write_csv(here("data_cleaned","cleaned.csv"))
 
-#STEP 3: DATA EXPLORATION
+#STEP 3: EXPLORATORY DATA ANALYSIS
 
 #3A AGE: Are there any errors in age?
   #How can you visualize age in years and how it relates to age_group categories?
