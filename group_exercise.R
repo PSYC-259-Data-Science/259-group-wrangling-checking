@@ -71,16 +71,20 @@ ds %>% write_csv(here("data_cleaned","cleaned.csv"))
   #Use a summary table and plots to investigate whether data equally precise for participants of different ages
 
 #Visualize the distribution of precision to see if there are values above 2.5
-ds %>% ggplot() + geom_histogram(aes(x = precision)) + geom_vline(xintercept = 2.5)
+ds %>% ggplot(aes(x = precision)) + geom_histogram() + geom_vline(xintercept = 2.5)
 
 #Create a summary to figure out which participants would we need to exclude if > 2.5 meant the data are unuseable? 
-ds %>% group_by(id, age_group) %>% summarize(precision = mean(precision, na.RM = T)) %>% filter(precision > 2.5)
+ds %>% group_by(id, age_group) %>% 
+  summarize(precision = mean(precision, na.RM = T)) %>% 
+  filter(precision > 2.5)
+
+ds %>% filter(precision > 2.5)
 
 #Use a summary table and plots to investigate whether data equally precise for participants of different ages
 ds %>% group_by(age_group) %>% summarize(across(precision, list(M = mean, MIN = min, MAX = max)))
 
-ds %>% ggplot() + geom_boxplot(aes(x = age_group, y = precision)) + geom_hline(yintercept = 2.5)
-ds %>% ggplot() + geom_point(aes(x = age, y = precision)) + geom_hline(yintercept = 2.5)
+ds %>% ggplot(aes(x = age_group, y = precision)) + geom_boxplot() + geom_hline(yintercept = 2.5)
+ds %>% ggplot(aes(x = age, y = precision)) + geom_point() + geom_hline(yintercept = 2.5)
 
 #3B AGE: Are there any errors in age? 
 #Convert age to years so that it can be more easily compared to age_group
