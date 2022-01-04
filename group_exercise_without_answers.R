@@ -2,7 +2,7 @@ library(tidyverse)
 library(here)
 
 #This project has two raw data files at different scales from a study of
-#infants, children, and adults watching a series of 7 video clips
+#infants, children, and adults watching a series of 7 video clips 
 
 #I wrote Steps 1 and 2 to import and merge the data, and kept them here for your reference
 #Skip down to Step 3 to work on EDA
